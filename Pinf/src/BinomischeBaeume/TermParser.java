@@ -1,23 +1,13 @@
 package BinomischeBaeume;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TermParser {
 
+    static final String OPERATORS = "+-*/^()";
+    public static void parse(String input) {
 
-    public static Node Parse(ArrayList<Node> input){
-
-
-        List<Node> output = new ArrayList<>();
-        List<Node> operatorStack = new ArrayList<>();
-
-        output.add();
-
-
-
-
-
+        for (int i = 0; i < input.length(); i++){
+            System.out.println(OPERATORS.contains(String.valueOf(input.charAt(i))));
+        }
 
     }
 }
