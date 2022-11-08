@@ -6,7 +6,6 @@ public class CharacterLists {
     public static final ArrayList<Character> OPERATORS = fillListWithOperators();
     public static final ArrayList<Character> CHARACTERS = fillListWithCharacters();
     public static final ArrayList<Character> NUMBERS = fillListWithNumbers();
-
     public static final ArrayList<Character> OPERATORSANDCHARACTERS = fillListWithOperatorsAndCharacters();
 
     public CharacterLists(){

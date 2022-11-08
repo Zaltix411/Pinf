@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class TermParser {
     private String[] arr;
     private final String input;
-    private final CharacterLists characterLists = new CharacterLists();
+
     private int amountOfOpeningBracketsWithoutClosingBrackets;
     private StringBuilder allCharacters;
 
@@ -19,7 +19,7 @@ public class TermParser {
         this.input = input;
     }
 
-    public String[] parse(String s) throws WrongBracketsException, IllegalCharacterException, IllegalCharacterAfterNumberException, TwoCharactersInARowException {
+    public String[] parse() {
 
 
             String temp = input;
@@ -33,9 +33,9 @@ public class TermParser {
                             i++;
                         }
                     }
-                // If current char is an operator or a bracket
+
                 if(CharacterLists.OPERATORS.contains(input.charAt(i)) || input.charAt(i) == '(' || input.charAt(i) == ')'){
-                    // Extend operator with two whitespaces around it
+
                     temp = temp.replace(String.valueOf(input.charAt(i)), " " + input.charAt(i)+ " ");
                 }
             }
@@ -45,7 +45,7 @@ public class TermParser {
 
             ArrayList<String> list = new ArrayList<>(Arrays.asList(arr));
 
-            list.removeIf(s -> s.equals(""));
+           list.removeIf(s -> s.equals(""));
 
             arr = list.toArray(new String[0]);
 
@@ -58,7 +58,7 @@ public class TermParser {
         return arr;
     }
 
-    public void illegalInput() throws IllegalCharacterException, IllegalCharacterAfterNumberException, TwoCharactersInARowException, WrongBracketsException {
+    public void illegalInput() {
         amountOfOpeningBracketsWithoutClosingBrackets = 0;
         allCharacters = new StringBuilder();
 
@@ -122,7 +122,7 @@ public class TermParser {
                 else{
 
                     for (int j = 0; j < arr[i].length(); i++){
-                        // If two same chars are after one another in the same string
+
                         if(j + 1 != arr[i].length() && CharacterLists.CHARACTERS.contains(arr[i].charAt(j)) && CharacterLists.OPERATORSANDCHARACTERS.contains(arr[i].charAt(j + 1))){
                             throw new TwoCharactersInARowException(allCharacters);
                         }
