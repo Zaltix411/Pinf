@@ -1,4 +1,4 @@
-package BinomischeBaeume.Exceptions;
+package BinomischeBaeume.Parse.Exceptions;
 
 public class TwoCharactersInARowException extends Exception {
     StringBuilder stringBuilder;

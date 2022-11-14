@@ -1,4 +1,4 @@
-package BinomischeBaeume;
+package BinomischeBaeume.Parse;
 
 public class ParseException extends Exception{
 

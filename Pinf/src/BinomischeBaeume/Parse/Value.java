@@ -1,6 +1,8 @@
-package BinomischeBaeume;
+package BinomischeBaeume.Parse;
 
-public class Value implements Node{
+import BinomischeBaeume.Operator.Node;
+
+public class Value implements Node {
     private double value;
 
     public Value(double value){

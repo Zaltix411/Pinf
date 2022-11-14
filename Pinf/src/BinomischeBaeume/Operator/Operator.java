@@ -1,4 +1,4 @@
-package BinomischeBaeume;
+package BinomischeBaeume.Operator;
 
 public class Operator implements Node{
 

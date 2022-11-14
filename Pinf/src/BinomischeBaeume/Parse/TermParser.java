@@ -1,6 +1,11 @@
-package BinomischeBaeume;
+package BinomischeBaeume.Parse;
 
-import BinomischeBaeume.Exceptions.*;
+import BinomischeBaeume.Parse.Exceptions.*;
+import BinomischeBaeume.Parse.Exceptions.IllegalCharacterAfterNumberException;
+import BinomischeBaeume.Parse.Exceptions.IllegalCharacterException;
+import BinomischeBaeume.Parse.Exceptions.TwoCharactersInARowException;
+import BinomischeBaeume.Parse.Exceptions.WrongBracketsException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 public class TermParser {
@@ -21,36 +26,35 @@ public class TermParser {
 
             temp = temp.replaceAll("[\\s|\\u00A0]+", "");
 
-            for (int i = 0; i < input.length(); i++) {
-                if(input.charAt(i) == '-' && CharacterLists.NUMBERS.contains(input.charAt(i+1))) {
 
-                    if (input.charAt(0) == '-' || CharacterLists.OPERATORS.contains(input.charAt(i-1))) {
+                for (int i = 0; i < input.length(); i++) {
+                    if (input.charAt(i) == '-' && CharacterLists.NUMBERS.contains(input.charAt(i + 1))) {
+
+                        if (input.charAt(0) == '-' || CharacterLists.OPERATORS.contains(input.charAt(i - 1))) {
                             i++;
                         }
                     }
 
-                if(CharacterLists.OPERATORS.contains(input.charAt(i)) || input.charAt(i) == '(' || input.charAt(i) == ')'){
+                    if (CharacterLists.OPERATORS.contains(input.charAt(i)) || input.charAt(i) == '(' || input.charAt(i) == ')') {
 
-                    temp = temp.replace(String.valueOf(input.charAt(i)), " " + input.charAt(i)+ " ");
+                        temp = temp.replace(String.valueOf(input.charAt(i)), " " + input.charAt(i) + " ");
+                    }
                 }
-            }
 
-            temp = temp.replace(",", ".");
-            arr = temp.split(" ");
+                temp = temp.replace(",", ".");
+                arr = temp.split(" ");
 
-            ArrayList<String> list = new ArrayList<>(Arrays.asList(arr));
+                ArrayList<String> list = new ArrayList<>(Arrays.asList(arr));
 
-           list.removeIf(s -> s.equals(""));
+                list.removeIf(s -> s.equals(""));
 
-            arr = list.toArray(new String[0]);
+                arr = list.toArray(new String[0]);
 
-            illegalInput();
-
+                illegalInput();
 
 
+                return arr;
 
-
-        return arr;
     }
 
     public void illegalInput() {

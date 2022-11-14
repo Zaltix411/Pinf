@@ -1,4 +1,4 @@
-package BinomischeBaeume.Exceptions;
+package BinomischeBaeume.Parse.Exceptions;
 
 
 public class WrongBracketsException extends Exception {

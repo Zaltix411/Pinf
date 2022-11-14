@@ -1,4 +1,4 @@
-package BinomischeBaeume;
+package BinomischeBaeume.Parse;
 
 import java.util.ArrayList;
 
