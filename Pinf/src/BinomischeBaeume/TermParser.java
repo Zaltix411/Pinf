@@ -1,11 +1,6 @@
 package BinomischeBaeume;
 
-
-import BinomischeBaeume.Exceptions.IllegalCharacterAfterNumberException;
-import BinomischeBaeume.Exceptions.IllegalCharacterException;
-import BinomischeBaeume.Exceptions.TwoCharactersInARowException;
-import BinomischeBaeume.Exceptions.WrongBracketsException;
-
+import BinomischeBaeume.Exceptions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 public class TermParser {
@@ -123,7 +118,7 @@ public class TermParser {
 
                     for (int j = 0; j < arr[i].length(); i++){
 
-                        if(j + 1 != arr[i].length() && CharacterLists.CHARACTERS.contains(arr[i].charAt(j)) && CharacterLists.OPERATORSANDCHARACTERS.contains(arr[i].charAt(j + 1))){
+                        if(j+1 != arr[i].length() && CharacterLists.CHARACTERS.contains(arr[i].charAt(j)) && CharacterLists.OPERATORSANDCHARACTERS.contains(arr[i].charAt(j + 1))){
                             throw new TwoCharactersInARowException(allCharacters);
                         }
 
