@@ -31,7 +31,7 @@ public class TermParser2 {
             }
 
            if(CharacterLists.CHARACTERS.contains(temp.charAt(i))){
-               while(stack != null && CharacterLists.CHARACTERS.contains(stack.get(0)) && ){
+               while(stack != null && CharacterLists.CHARACTERS.contains(stack.get(0)) ){
 
                }
            }
