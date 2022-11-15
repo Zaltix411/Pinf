@@ -47,7 +47,7 @@ public class TermParser2 {
                stack.add(temp.charAt(i));
            }
            if(temp.charAt(i) == ')'){
-               //löschen
+               //löschen mach
                stack.add(temp.charAt(i));
            }
         }
