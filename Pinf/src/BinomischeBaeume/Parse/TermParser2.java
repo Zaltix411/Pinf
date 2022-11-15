@@ -35,7 +35,7 @@ public class TermParser2 {
            if(CharacterLists.CHARACTERS.contains(temp.charAt(i))){
                do{
                    test = false;
-                   if(stack.size() > 0 && CharacterLists.CHARACTERS.contains(stack.get(stack.size()-1)) && temp.charAt(i) ) {
+                   if(stack.size() > 0 && CharacterLists.CHARACTERS.contains(stack.get(stack.size()-1)) ) {
                        output.add(stack.get(stack.size() - 1));
                        test = true;
                    }
@@ -47,7 +47,8 @@ public class TermParser2 {
                stack.add(temp.charAt(i));
            }
            if(temp.charAt(i) == ')'){
-               if()
+               //löschen
+               stack.add(temp.charAt(i));
            }
         }
 
