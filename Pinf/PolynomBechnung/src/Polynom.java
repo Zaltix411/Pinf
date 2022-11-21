@@ -11,10 +11,11 @@ public class Polynom {
 
 
     public String output(double[] coefficient, double input){
-
-
-
-
+        String outputString;
+        for(int i = 0; i < coefficient.length; i++){
+            
+        }
+        return outputString;
     }
 
 
