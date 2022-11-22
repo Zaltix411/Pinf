@@ -28,7 +28,6 @@ public class Polynom {
         return sum;
     }
 
-
     private void highestPotenz() {
         int potenz = 0;
 
@@ -55,11 +54,11 @@ public class Polynom {
 
         if(evenNumbers == totalNumbers){
             symmetry = SYMMETRIES[0];
-        }
-        if(oddNumbers == totalNumbers){
+        } else if(oddNumbers == totalNumbers){
             symmetry = SYMMETRIES[1];
+        } else {
+            symmetry = SYMMETRIES[2];
         }
-        symmetry = SYMMETRIES[2];
     }
 
     @Override
