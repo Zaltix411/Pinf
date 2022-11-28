@@ -1,3 +1,5 @@
+package Pinf.PolynomBechnung.src;
+
 public class Polynom {
 
     private final double[] coefficients;
@@ -29,17 +31,21 @@ public class Polynom {
 
 
 
-    public double[] firstDerivation(){
+    public double[] firstDerivations() {
+        double[] derivation = new double[5];
 
-        double[] derivation = new double[coefficients.length];
-
-
-        for (int i = coefficients.length - 1; i >= 0; i--){
-             derivation[i-1] = coefficients[i] * i;
+        for (int i = 0; i < coefficients.length; i++) {
+            if (i == 0) derivation[i] = 0;
+            else derivation[i-1] = i * coefficients[i];
         }
 
         return derivation;
     }
+
+    public Polynom derivationPolynom() {
+        return new Polynom(firstDerivations());
+    }
+
 
     private void highestPotenz() {
         int potenz = 0;
