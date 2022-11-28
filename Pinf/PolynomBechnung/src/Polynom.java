@@ -14,18 +14,31 @@ public class Polynom {
     public String getHighestPotenz() {
         return highestPotenz;
     }
-
     public String getSymmetry() {
         return symmetry;
     }
 
-    //following methods are unfinished or not build in the right way atm
+
     public double calculateY(double x) {
         double sum = 0.;
         for (int i = 0; i < coefficients.length; i++) {
             sum += coefficients[i] * Math.pow(x, i);
         }
         return sum;
+    }
+
+
+
+    public double[] firstDerivation(){
+
+        double[] derivation = new double[coefficients.length];
+
+
+        for (int i = coefficients.length - 1; i >= 0; i--){
+             derivation[i-1] = coefficients[i] * i;
+        }
+
+        return derivation;
     }
 
     private void highestPotenz() {
