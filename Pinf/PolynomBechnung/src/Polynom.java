@@ -1,16 +1,14 @@
-package Pinf.PolynomBechnung.src;
+
 
 public class Polynom {
 
     private final double[] coefficients;
     private String symmetry;
     private String highestPotenz;
-    public final String[] SYMMETRIES = new String[] {"Axisymmetric", "Pointsymmetric", "No symmetry"};
+    public static final String[] SYMMETRIES = new String[] {"Axisymmetric", "Pointsymmetric", "No symmetry"};
 
     public Polynom(double[] coefficients) {
         this.coefficients = coefficients;
-        checkForSymmetry();
-        highestPotenz();
     }
 
     public String getHighestPotenz() {
