@@ -13,9 +13,9 @@ public class TestPolynom {
 
     @Test
     void testPolynom() {
-        Polynom polynom = new Polynom(new double[]{3, 3, 3, 3, 3});
-        // 187
+        Polynom polynom = new Polynom(new double[]{2.0, 0.0, 0.0});
+        polynom.getZeropoints();
+        assertEquals("[2.0]",polynom.getZeropoints().toString());
 
-        //assertEquals(Arrays.toString(new double[] {3, 6, 9, 12, 0}),Arrays.toString(polynom.firstDerivations()));
     }
 }

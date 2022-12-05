@@ -1,4 +1,4 @@
-
+import java.util.ArrayList;
 
 public class Polynom {
 
@@ -27,6 +27,49 @@ public class Polynom {
         return sum;
     }
 
+    public ArrayList<Double> getZeropoints(){
+        double[] temp = coefficients;
+        ArrayList<Double> zeropoints = new ArrayList<>();
+        Double x1;
+        Double x2;
+        Double sum;
+        double p = coefficients[1];
+        double q = coefficients[0];
+
+        if(coefficients[2] != 0.0){
+
+            if(temp[2] < 0){
+                p = p / -1;
+                q = q / -1;
+            }
+               p = p / coefficients[2];
+               q = q / coefficients[2];
+
+            double sqrtinput = Math.pow((p/2),2)-q;
+            if(sqrtinput < 0 ){
+                System.out.println("geht nicht");
+            }else{
+                double formel =  Math.sqrt(sqrtinput);
+                x1 = -(p/2) - formel;
+                x2 = -(p/2) + formel;
+                zeropoints.add(x1);
+                zeropoints.add(x2);
+            }
+
+
+        }else if(coefficients[1] != 0.0){
+            sum = coefficients[0] * - 1 / coefficients[1];
+            zeropoints.add(sum);
+
+
+        }else if(coefficients[0] != 0){
+            System.out.println("Lösung ist entweder 0 oder Unendlich");
+        }else{
+            System.out.println("Exponent ist zu groß");
+        }
+        return zeropoints;
+    }
+
 
 
     public double[] firstDerivations() {
@@ -36,7 +79,6 @@ public class Polynom {
             if (i == 0) derivation[i] = 0;
             else derivation[i-1] = i * coefficients[i];
         }
-
         return derivation;
     }
 
@@ -68,7 +110,6 @@ public class Polynom {
                 totalNumbers++;
             }
         }
-
         if(evenNumbers == totalNumbers){
             symmetry = SYMMETRIES[0];
         } else if(oddNumbers == totalNumbers){
