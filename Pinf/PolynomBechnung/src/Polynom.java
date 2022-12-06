@@ -135,7 +135,7 @@ public class Polynom {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("f(x) =");
+        StringBuilder builder = new StringBuilder("f" + ("'".repeat(derivationCounter)) + "(x) = ");
         double[] temp = coefficients;
         int firstValueIndex = -1;
         for (int i = coefficients.length - 1; i >= 0; i--) if (coefficients[i] != 0) firstValueIndex = i;
