@@ -1,18 +1,25 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Polynom {
 
     private final double[] coefficients;
+    private int derivationCounter = 0;
     private String symmetry;
-    private String highestPotenz;
     public static final String[] SYMMETRIES = new String[] {"Axisymmetric", "Pointsymmetric", "No symmetry"};
 
     public Polynom(double[] coefficients) {
         this.coefficients = coefficients;
     }
+    private Polynom(double[] coefficients, int derivationCounter){
+        this.coefficients = coefficients;
+        this.derivationCounter = derivationCounter;
+    }
 
-    public String getHighestPotenz() {
-        return highestPotenz;
+
+
+    public int getHighestPotenz() {
+        return highestPotenz();
     }
     public String getSymmetry() {
         return symmetry;
@@ -27,77 +34,84 @@ public class Polynom {
         return sum;
     }
 
-    public ArrayList<Double> getZeropoints(){
+    public ArrayList<Double> getZeropoints() {
+        // If function is linear
+        if (getHighestPotenz() == 1) {
+            return getNullLinear();
+        }
+        // If function is quadratic
+        else if(getHighestPotenz() == 2) {
+            return getNullQuadratic();
+        }
+        return new ArrayList<>();
+    }
+
+    private ArrayList<Double> getNullQuadratic() {
         double[] temp = coefficients;
         ArrayList<Double> zeropoints = new ArrayList<>();
-        Double x1;
-        Double x2;
-        Double sum;
+        double x1;
+        double x2;
+
         double p = coefficients[1];
         double q = coefficients[0];
 
-        if(coefficients[2] != 0.0){
 
-            if(temp[2] < 0){
+
+            if (temp[2] < 0) {
                 p = p / -1;
                 q = q / -1;
             }
-               p = p / coefficients[2];
-               q = q / coefficients[2];
+            p = p / coefficients[2];
+            q = q / coefficients[2];
 
-            double sqrtinput = Math.pow((p/2),2)-q;
-            if(sqrtinput < 0 ){
-                System.out.println("geht nicht");
-            }else{
-                double formel =  Math.sqrt(sqrtinput);
-                x1 = -(p/2) - formel;
-                x2 = -(p/2) + formel;
+            double sqrtinput = Math.pow((p / 2), 2) - q;
+            if (sqrtinput < 0) {
+                return zeropoints;
+            } else {
+                double formel = Math.sqrt(sqrtinput);
+                x1 = -(p / 2) - formel;
+                x2 = -(p / 2) + formel;
                 zeropoints.add(x1);
                 zeropoints.add(x2);
+                return zeropoints;
             }
 
+    }
+    private ArrayList<Double> getNullLinear(){
+        return new ArrayList<>(List.of((coefficients[0] * -1) / coefficients[1]));
 
-        }else if(coefficients[1] != 0.0){
-            sum = coefficients[0] * - 1 / coefficients[1];
-            zeropoints.add(sum);
-
-
-        }else if(coefficients[0] != 0){
-            System.out.println("Lösung ist entweder 0 oder Unendlich");
-        }else{
-            System.out.println("Exponent ist zu groß");
-        }
-        return zeropoints;
     }
 
 
-
     public double[] firstDerivations() {
-        double[] derivation = new double[5];
+        double[] derivation = { 0.0, 0.0, 0.0, 0.0, 0.0 };
 
-        for (int i = 0; i < coefficients.length; i++) {
-            if (i == 0) derivation[i] = 0;
-            else derivation[i-1] = i * coefficients[i];
+        for (int i = 0; i < coefficients.length-1; i++) {
+            derivation[i] = (i+1) * coefficients[i+1];
         }
+
         return derivation;
     }
 
     public Polynom derivationPolynom() {
-        return new Polynom(firstDerivations());
+        return new Polynom(firstDerivations(), (derivationCounter+1));
     }
 
 
-    private void highestPotenz() {
-        int potenz = 0;
+    private int highestPotenz() {
+        int highestPotenz = 0;
+        for (int i = coefficients.length - 1; i >= 0; i--) {
+            if (highestPotenz == 0) {
+                if (coefficients[i] != 0) {
+                    highestPotenz = i;
 
-        for (int i = 4; i > 0; i--) {
-            if (coefficients[i] != 0.) {
-                potenz = i;
-                i = 0;
+                }
+
             }
         }
-       highestPotenz = potenz + ". Grades";
+            return highestPotenz;
     }
+
 
     private void checkForSymmetry() {
         int totalNumbers = 0;
