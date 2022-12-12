@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Polynom {
@@ -6,6 +7,8 @@ public class Polynom {
     private final double[] coefficients;
     private int derivationCounter = 0;
     private String symmetry;
+    private double maxima;
+    private double minima;
     public static final String[] SYMMETRIES = new String[] {"Axisymmetric", "Pointsymmetric", "No symmetry"};
 
     public Polynom(double[] coefficients) {
@@ -79,7 +82,6 @@ public class Polynom {
     }
     private ArrayList<Double> getNullLinear(){
         return new ArrayList<>(List.of((coefficients[0] * -1) / coefficients[1]));
-
     }
 
 
@@ -92,6 +94,24 @@ public class Polynom {
 
         return derivation;
     }
+
+
+    public double[] getExtremePointsQuadratic(){
+        ArrayList<Double> sumssecond = new ArrayList<>();
+        double sum = 0;
+        Polynom polynom = new Polynom(firstDerivations());
+        ArrayList<Double> zeropoints = polynom.getZeropoints();
+        double[] second = polynom.firstDerivations();
+        //make the polynom into a second derivation to check for maxima and minima
+
+        for(int j = 0; j < zeropoints.size(); j++){
+            for (int i = 0; i< second.length; i++) {
+                sum += second[i] * Math.pow(zeropoints.get(j), i);
+            }
+        }
+
+    }
+
 
     public Polynom derivationPolynom() {
         return new Polynom(firstDerivations(), (derivationCounter+1));
