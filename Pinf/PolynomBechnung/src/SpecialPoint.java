@@ -1,27 +1,28 @@
+package Pinf.PolynomBechnung.src;
+
 public abstract class SpecialPoint {
-    double xvalue;
-    double yvalue;
 
-    public SpecialPoint(double xvalue, double yvalue){
-        this.xvalue = xvalue;
-        this.yvalue = yvalue;
+    double xValue;
+    double yValue;
+
+    public SpecialPoint(double xValue, double yValue) {
+        this.xValue = xValue;
+        this.yValue = yValue;
     }
 
-
-
-    public double getXvalue() {
-        return xvalue;
+    public double getxValue() {
+        return xValue;
     }
 
-    public void setXvalue(double xvalue) {
-        this.xvalue = xvalue;
+    public void setxValue(double xValue) {
+        this.xValue = xValue;
     }
 
-    public double getYvalue() {
-        return yvalue;
+    public double getyValue() {
+        return yValue;
     }
 
-    public void setYvalue(double yvalue) {
-        this.yvalue = yvalue;
+    public void setyValue(double yValue) {
+        this.yValue = yValue;
     }
 }

@@ -1,32 +1,29 @@
+package Pinf.PolynomBechnung.src;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Polynom {
 
     private final double[] coefficients;
-    private int derivationCounter = 0;
     private String symmetry;
-    private double maxima;
-    private double minima;
-    public static final String[] SYMMETRIES = new String[] {"Axisymmetric", "Pointsymmetric", "No symmetry"};
+    private String highestPotenz;
+    double maxima;
+    double minima;
+    public static final String[] SYMMETRIES = new String[]{"Axisymmetric", "Pointsymmetric", "No symmetry"};
 
     public Polynom(double[] coefficients) {
         this.coefficients = coefficients;
     }
-    private Polynom(double[] coefficients, int derivationCounter){
-        this.coefficients = coefficients;
-        this.derivationCounter = derivationCounter;
+
+    public String getHighestPotenz() {
+        return highestPotenz;
     }
 
-
-
-    public int getHighestPotenz() {
-        return highestPotenz();
-    }
     public String getSymmetry() {
         return symmetry;
     }
+
+    ArrayList<Double> zeropoints = new ArrayList<>();
 
 
     public double calculateY(double x) {
@@ -37,101 +34,111 @@ public class Polynom {
         return sum;
     }
 
+
     public ArrayList<Double> getZeropoints() {
-        // If function is linear
-        if (getHighestPotenz() == 1) {
-            return getNullLinear();
+        if (coefficients[2] < 0.0) {
+            pqFormel();
+        } else if (coefficients[1] < 0.0) {
+            firstGradeY();
         }
-        // If function is quadratic
-        else if(getHighestPotenz() == 2) {
-            return getNullQuadratic();
-        }
-        return new ArrayList<>();
+        return zeropoints;
     }
 
-    private ArrayList<Double> getNullQuadratic() {
-        double[] temp = coefficients;
-        ArrayList<Double> zeropoints = new ArrayList<>();
-        double x1;
-        double x2;
 
+
+    public ArrayList<Double> pqFormel() {
+        double[] temp = coefficients;
+        Double x1;
+        Double x2;
         double p = coefficients[1];
         double q = coefficients[0];
 
+        if (temp[2] < 0) {
+            p = p / -1;
+            q = q / -1;
 
-
-            if (temp[2] < 0) {
-                p = p / -1;
-                q = q / -1;
-            }
             p = p / coefficients[2];
             q = q / coefficients[2];
 
             double sqrtinput = Math.pow((p / 2), 2) - q;
-            if (sqrtinput < 0) {
-                return zeropoints;
-            } else {
+            if (!(sqrtinput < 0)) {
                 double formel = Math.sqrt(sqrtinput);
                 x1 = -(p / 2) - formel;
                 x2 = -(p / 2) + formel;
                 zeropoints.add(x1);
                 zeropoints.add(x2);
-                return zeropoints;
             }
-
+        }
+        return zeropoints;
     }
-    private ArrayList<Double> getNullLinear(){
-        return new ArrayList<>(List.of((coefficients[0] * -1) / coefficients[1]));
+
+    public void firstGradeY(){
+
+        double sum;
+        sum = coefficients[0] * - 1 / coefficients[1];
+        zeropoints.add(sum);
+
     }
 
 
     public double[] firstDerivations() {
-        double[] derivation = { 0.0, 0.0, 0.0, 0.0, 0.0 };
+        double[] derivation = new double[5];
 
-        for (int i = 0; i < coefficients.length-1; i++) {
-            derivation[i] = (i+1) * coefficients[i+1];
+        for (int i = 0; i < coefficients.length; i++) {
+            if (i == 0) derivation[i] = 0;
+            else derivation[i-1] = i * coefficients[i];
         }
-
         return derivation;
     }
 
-
-    public double[] getExtremePointsQuadratic(){
-        ArrayList<Double> sumssecond = new ArrayList<>();
-        double sum = 0;
-        Polynom polynom = new Polynom(firstDerivations());
-        ArrayList<Double> zeropoints = polynom.getZeropoints();
-        double[] second = polynom.firstDerivations();
-        //make the polynom into a second derivation to check for maxima and minima
-
-        for(int j = 0; j < zeropoints.size(); j++){
-            for (int i = 0; i< second.length; i++) {
-                sum += second[i] * Math.pow(zeropoints.get(j), i);
-            }
-        }
-
-    }
-
-
     public Polynom derivationPolynom() {
-        return new Polynom(firstDerivations(), (derivationCounter+1));
+        return new Polynom(firstDerivations());
+    }
+
+    public ArrayList<Double> getExtremePointsSquare() {
+        Polynom polynom = new Polynom(firstDerivations());
+        ArrayList<Double> zeroPoints = polynom.getZeropoints();
+        double sum = 0;
+
+        for (int i = 0; i < zeroPoints.size(); i++){
+            for (int j = 0; j < firstDerivations().length; j++){
+                sum += firstDerivations()[j] * Math.pow(zeroPoints.get(i),i);
+            }
+            if(sum != 0){
+                zeroPoints.remove(i);
+            }
+            sum = 0;
+        }
+
+        double[] derviation2 = polynom.firstDerivations();
+        for(int i = 0; i < zeroPoints.size(); i++){
+            for (int j = 0; j < derviation2.length; j++){
+                sum += derviation2[j] * Math.pow(zeroPoints.get(i),i);
+            }
+            if(sum > 0){
+                maxima = i;
+            }else{
+                minima = i;
+            }
+            sum = 0;
+        }
+        zeroPoints.add(maxima);
+        zeroPoints.add(minima);
+        return zeroPoints;
     }
 
 
-    private int highestPotenz() {
-        int highestPotenz = 0;
-        for (int i = coefficients.length - 1; i >= 0; i--) {
-            if (highestPotenz == 0) {
-                if (coefficients[i] != 0) {
-                    highestPotenz = i;
+    private void highestPotenz() {
+        int potenz = 0;
 
-                }
-
+        for (int i = 4; i > 0; i--) {
+            if (coefficients[i] != 0.) {
+                potenz = i;
+                i = 0;
             }
         }
-            return highestPotenz;
+       highestPotenz = potenz + ". Grades";
     }
-
 
     private void checkForSymmetry() {
         int totalNumbers = 0;
@@ -155,7 +162,7 @@ public class Polynom {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder("f" + ("'".repeat(derivationCounter)) + "(x) = ");
+        StringBuilder builder = new StringBuilder("f(x) =");
         double[] temp = coefficients;
         int firstValueIndex = -1;
         for (int i = coefficients.length - 1; i >= 0; i--) if (coefficients[i] != 0) firstValueIndex = i;

@@ -1,11 +1,10 @@
+package Pinf.Test;
 
 
-import org.junit.jupiter.api.Test;
+import Pinf.PolynomBechnung.src.Polynom;
+import org.testng.annotations.Test;
 
 
-import java.rmi.server.ExportException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,8 +12,10 @@ import static org.junit.Assert.assertEquals;
 public class TestPolynom {
 
     @Test
-    void testDerivationPolynomMinus(){
-        Polynom polynom = new Polynom(new double[] { 3.0, 2.0, -4.0, 3.0, 2.0 });
-        assertEquals("f'(x) = 8.0x^3 + 9.0x^2 - 8.0x + 2.0", polynom.firstDerivations().toString());
+    void testPolynom() {
+        Polynom polynom = new Polynom(new double[]{-1.0, 4.0, 1.0});
+        polynom.getZeropoints();
+        assertEquals("[2.0]",polynom.getZeropoints().toString());
+
     }
 }

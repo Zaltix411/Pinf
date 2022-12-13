@@ -1,11 +1,13 @@
-public class TurningPoint extends SpecialPoint{
+package Pinf.PolynomBechnung.src;
+
+public class TurningPoint extends SpecialPoint {
 
     boolean isGlobal;
-    double xvalue;
-    double yvalue;
+    double xValue;
+    double yValue;
 
-    public TurningPoint(boolean isGlobal, double xvalue,double yvalue){
-        super(xvalue, yvalue);
+    public TurningPoint(boolean isGlobal, double xValue, double yValue) {
+        super(xValue, yValue);
         this.isGlobal = isGlobal;
     }
 }
