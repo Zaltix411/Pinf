@@ -1,5 +1,3 @@
-package Pinf.PolynomBechnung.src;
-
 import java.util.ArrayList;
 
 public class Polynom {
@@ -7,8 +5,8 @@ public class Polynom {
     private final double[] coefficients;
     private String symmetry;
     private String highestPotenz;
-    double maxima;
-    double minima;
+    TurningPoint maxima;
+    TurningPoint minima;
     public static final String[] SYMMETRIES = new String[]{"Axisymmetric", "Pointsymmetric", "No symmetry"};
 
     public Polynom(double[] coefficients) {
@@ -72,6 +70,16 @@ public class Polynom {
         return zeropoints;
     }
 
+
+    public double getFunction(double x) {
+        double value = 0.0;
+
+        for(int i = 0; i < coefficients.length; i++){
+            value += coefficients[i] * Math.pow(x,i);
+        }
+        return value;
+    }
+
     public void firstGradeY(){
 
         double sum;
@@ -95,36 +103,31 @@ public class Polynom {
         return new Polynom(firstDerivations());
     }
 
-    public ArrayList<Double> getExtremePointsSquare() {
-        Polynom polynom = new Polynom(firstDerivations());
-        ArrayList<Double> zeroPoints = polynom.getZeropoints();
-        double sum = 0;
+    private ArrayList<TurningPoint> calcExtremePointsSquare() {
+        ArrayList<TurningPoint> turningPoints = new ArrayList<>();
 
-        for (int i = 0; i < zeroPoints.size(); i++){
-            for (int j = 0; j < firstDerivations().length; j++){
-                sum += firstDerivations()[j] * Math.pow(zeroPoints.get(i),i);
+        for (double xValue : this.getZeropoints()) {
+            double yValue = this.getFunction(xValue);
+            if (yValue == 0.0) {
+                turningPoints.add(new TurningPoint(xValue, yValue, true));
             }
-            if(sum != 0){
-                zeroPoints.remove(i);
+        }
+        return turningPoints;
+    }
+
+    private void setTurningPointSqr() {
+        Polynom firstDerivation = new Polynom(firstDerivations());
+        Polynom secondDerivation = new Polynom(firstDerivation.firstDerivations());
+        for(TurningPoint turningPoint : calcExtremePointsSquare()){
+            double yValue = secondDerivation.getFunction(turningPoint.getxValue());
+            if(yValue > 0){
+                this.minima = turningPoint;
+            }if(yValue < 0){
+                this.maxima = turningPoint;
             }
-            sum = 0;
         }
 
-        double[] derviation2 = polynom.firstDerivations();
-        for(int i = 0; i < zeroPoints.size(); i++){
-            for (int j = 0; j < derviation2.length; j++){
-                sum += derviation2[j] * Math.pow(zeroPoints.get(i),i);
-            }
-            if(sum > 0){
-                maxima = i;
-            }else{
-                minima = i;
-            }
-            sum = 0;
-        }
-        zeroPoints.add(maxima);
-        zeroPoints.add(minima);
-        return zeroPoints;
+
     }
 
 

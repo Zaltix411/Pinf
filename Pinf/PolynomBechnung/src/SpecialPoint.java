@@ -1,5 +1,3 @@
-package Pinf.PolynomBechnung.src;
-
 public abstract class SpecialPoint {
 
     double xValue;

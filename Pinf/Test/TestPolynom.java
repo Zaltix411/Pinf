@@ -1,7 +1,4 @@
-package Pinf.Test;
-
-
-import Pinf.PolynomBechnung.src.Polynom;
+import Polynom;
 import org.testng.annotations.Test;
 
 
